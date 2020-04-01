@@ -10,41 +10,35 @@ let emailGroup = document.getElementById('email-group');
 let phoneGroup = document.getElementById('phone-group');
 let studentNameGroup = document.getElementById('student-name-group');
 
-let conditions = {
+let groupConditions = {
     email: {
-        email: {
-            email:true,
-            presence: true
-        }
+        email: true,
+        presence: true
     },
     name: {
-        name:{
-            presence:true,
-            length:{
-                minimum:1
-            }
+        presence: true,
+        length: {
+            minimum: 1
         }
     },
     phone: {
-        phone:{
-            presence: true
+        presence: true,
+        length: {
+            minimum: 1
         }
     },
     studentName: {
-        studentName: {
-            presence: true,
-            length:{
-                minimum:1
-            }
+        presence: true,
+        length: {
+            minimum: true
         }
     }
 }
-
 function inputValidation(event){
     let field = event.target.getAttribute('name');
     let value = event.target.value;
     if (field === 'name') {
-        if (validate({ name: value }, conditions.name) != undefined) {
+        if (validate({ name: value }, {name: groupConditions.name}) != undefined) {
             nameGroup.querySelector('.error').innerHTML = "Required!";
             nameGroup.querySelector('.error').classList.remove('hide-error');
         }
@@ -54,7 +48,7 @@ function inputValidation(event){
         }
     }
     else if (field === 'email') {
-        if (validate({ email: value }, conditions.email) != undefined) {
+        if (validate({ email: value }, {email: groupConditions.email}) != undefined) {
             emailGroup.querySelector('.error').innerHTML = "Please enter valid email address";
             emailGroup.querySelector('.error').classList.remove('hide-error');
         }
@@ -63,7 +57,7 @@ function inputValidation(event){
         }
     }
     else if (field === 'phone_number') {
-        if (validate({ phone: value }, conditions.phone) != undefined) {
+        if (validate({ phone: value }, {phone: groupConditions.phone}) != undefined) {
             phoneGroup.querySelector('.error').innerHTML = "Please enter valid phone number";
             phoneGroup.querySelector('.error').classList.remove('hide-error');
         }
@@ -72,7 +66,7 @@ function inputValidation(event){
         }
     }
     else if (field === 'studentName') {
-        if (validate({ studentName: value }, conditions.studentName) != undefined) {
+        if (validate({ studentName: value }, {studentName: groupConditions.studentName}) != undefined) {
             studentNameGroup.querySelector('.error').innerHTML = "Required!";
             studentNameGroup.querySelector('.error').classList.remove('hide-error');
         }
@@ -101,9 +95,7 @@ for(let i=0;i<formGroups.length;i++){
 }
 
 
-
 let submitBtn = document.getElementById('submit-btn');
-
 
 
 submitBtn.addEventListener('click', (event) => {
@@ -112,6 +104,13 @@ submitBtn.addEventListener('click', (event) => {
         email: emailGroup.getElementsByTagName('input')[0].value,
         phone: phoneGroup.getElementsByTagName('input')[0].value,
         studentName: studentNameGroup.getElementsByTagName('input')[0].value,
+    }
+
+    if(validate(inputs, groupConditions) != undefined){
+        // submit request
+    }
+    else{
+
     }
 
 })
